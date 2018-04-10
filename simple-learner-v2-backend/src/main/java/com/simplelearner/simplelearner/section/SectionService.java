@@ -34,4 +34,9 @@ public class SectionService {
         }
         return null;
     }
+
+    List<Task> getTasksOfSection(String sectionName) {
+        Optional<Section> sectionOptional = sectionRepository.findById(sectionName);
+        return sectionOptional.map(Section::getTasks).orElse(null);
+    }
 }

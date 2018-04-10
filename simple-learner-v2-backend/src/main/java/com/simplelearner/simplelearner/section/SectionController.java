@@ -37,4 +37,9 @@ public class SectionController {
         Section section = sectionService.addTasks(sectionName, tasks);
         return new ResponseEntity<>(section, new HttpHeaders(), section == null ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
     }
+
+    @RequestMapping(value = "{sectionName}/tasks")
+    public Iterable<Task> getTasksOfSection(@PathVariable String sectionName) {
+        return sectionService.getTasksOfSection(sectionName);
+    }
 }
