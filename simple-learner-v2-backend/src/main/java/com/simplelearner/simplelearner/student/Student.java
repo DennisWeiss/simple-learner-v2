@@ -81,11 +81,19 @@ public class Student {
         this.sections = sections;
     }
 
+    public void addSection(Section section) {
+        sections.add(section);
+    }
+
     public List<Task> getTasks() {
         return tasks;
     }
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 }

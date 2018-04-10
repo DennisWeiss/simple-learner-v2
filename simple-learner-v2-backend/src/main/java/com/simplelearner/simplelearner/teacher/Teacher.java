@@ -1,5 +1,6 @@
 package com.simplelearner.simplelearner.teacher;
 
+import com.simplelearner.simplelearner.section.Section;
 import com.simplelearner.simplelearner.subject.Subject;
 
 import javax.persistence.*;
@@ -15,6 +16,9 @@ public class Teacher {
     private String firstName;
     private String lastName;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Section> sections;
+
     @ManyToMany
     @JoinTable(name = "teacher_subject",
             joinColumns = @JoinColumn(name = "teacher"),
@@ -22,6 +26,7 @@ public class Teacher {
     private List<Subject> subjects;
 
     public Teacher() {
+        this.sections = new ArrayList<>();
         this.subjects = new ArrayList<>();
     }
 
@@ -63,6 +68,18 @@ public class Teacher {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    public void addSection(Section section) {
+        sections.add(section);
     }
 
     public List<Subject> getSubjects() {

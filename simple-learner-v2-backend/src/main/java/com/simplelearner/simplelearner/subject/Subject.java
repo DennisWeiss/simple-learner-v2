@@ -1,8 +1,10 @@
 package com.simplelearner.simplelearner.subject;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.simplelearner.simplelearner.category.Category;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Subject {
@@ -12,9 +14,15 @@ public class Subject {
     @Column(length = 4, unique = true, nullable = false)
     private String abbreviation;
 
-    public Subject() {}
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Category> categories;
+
+    public Subject() {
+        this.categories = new ArrayList<>();
+    }
 
     public Subject(String name, String abbreviation) {
+        this();
         this.name = name;
         this.abbreviation = abbreviation;
     }
@@ -33,5 +41,17 @@ public class Subject {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
     }
 }

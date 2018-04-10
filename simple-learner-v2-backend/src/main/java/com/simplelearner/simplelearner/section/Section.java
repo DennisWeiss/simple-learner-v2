@@ -1,27 +1,26 @@
 package com.simplelearner.simplelearner.section;
 
-import com.simplelearner.simplelearner.category.Category;
-import com.simplelearner.simplelearner.teacher.Teacher;
+import com.simplelearner.simplelearner.task.Task;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Section {
     @Id
     private String name;
 
-    @ManyToOne
-    private Teacher teacher;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
-    @ManyToOne
-    private Category category;
+    public Section() {
+        tasks = new ArrayList<>();
+    }
 
-    public Section() {}
-
-    public Section(String name, Teacher teacher, Category category) {
+    public Section(String name) {
+        this();
         this.name = name;
-        this.teacher = teacher;
-        this.category = category;
     }
 
     public String getName() {
@@ -32,19 +31,19 @@ public class Section {
         this.name = name;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public Category getCategory() {
-        return category;
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void addTasks(List<Task> tasks) {
+        this.tasks.addAll(tasks);
     }
 }

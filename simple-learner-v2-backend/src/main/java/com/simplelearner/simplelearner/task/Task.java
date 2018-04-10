@@ -13,13 +13,10 @@ public class Task {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Section section;
-
     @Column(length = 500, nullable = false)
     private String question;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public Task() {
@@ -28,7 +25,6 @@ public class Task {
 
     public Task(Section section, String question) {
         this();
-        this.section = section;
         this.question = question;
     }
 
@@ -40,13 +36,6 @@ public class Task {
         this.id = id;
     }
 
-    public Section getSection() {
-        return section;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
 
     public String getQuestion() {
         return question;
@@ -62,5 +51,14 @@ public class Task {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answers=" + answers +
+                '}';
     }
 }
