@@ -7,6 +7,7 @@ import com.simplelearner.simplelearner.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,26 +31,34 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    Student addSection(String studentName, String sectionName) {
+    Student addSections(String studentName, String[] sectionNames) {
         Optional<Student> studentOptional = studentRepository.findById(studentName);
-        Optional<Section> sectionOptional = sectionRepository.findById(sectionName);
-        if (studentOptional.isPresent() && sectionOptional.isPresent()) {
+        if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
-            Section section = sectionOptional.get();
-            student.addSection(section);
+            for (String sectionName : sectionNames) {
+                Optional<Section> sectionOptional = sectionRepository.findById(sectionName);
+                if (sectionOptional.isPresent()) {
+                    Section section = sectionOptional.get();
+                    student.addSection(section);
+                }
+            }
             studentRepository.save(student);
             return student;
         }
         return null;
     }
 
-    Student addTask(String studentName, Long taskId) {
+    Student addTasks(String studentName, List<Long> taskIds) {
         Optional<Student> studentOptional = studentRepository.findById(studentName);
-        Optional<Task> taskOptional = taskRepository.findById(taskId);
-        if (studentOptional.isPresent() && taskOptional.isPresent()) {
+        if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
-            Task task = taskOptional.get();
-            student.addTask(task);
+            for (Long taskId : taskIds) {
+                Optional<Task> taskOptional = taskRepository.findById(taskId);
+                if (taskOptional.isPresent()) {
+                    Task task = taskOptional.get();
+                    student.addTask(task);
+                }
+            }
             studentRepository.save(student);
             return student;
         }

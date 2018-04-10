@@ -42,4 +42,8 @@ public class Category {
     public void addSection(Section section) {
         sections.add(section);
     }
+
+    public void addSections(List<Section> sections) {
+        this.sections.addAll(sections);
+    }
 }

@@ -31,8 +31,8 @@ public class SectionController {
         return sectionService.getAllSections();
     }
 
-    @RequestMapping(value = "addtasks", method = RequestMethod.POST)
-    public ResponseEntity<Section> addTasks(@RequestParam(value = "sectionname") String sectionName,
+    @RequestMapping(value = "{sectionName}/addtasks", method = RequestMethod.POST)
+    public ResponseEntity<Section> addTasks(@PathVariable String sectionName,
                                             @RequestBody List<Task> tasks) {
         Section section = sectionService.addTasks(sectionName, tasks);
         return new ResponseEntity<>(section, new HttpHeaders(), section == null ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);

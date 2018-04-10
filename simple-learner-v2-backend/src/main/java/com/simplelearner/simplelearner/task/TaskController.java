@@ -22,4 +22,9 @@ public class TaskController {
         taskService.save(task);
         return new ResponseEntity<>(task, new HttpHeaders(), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public Iterable<Task> getAllTasks() {
+        return taskService.getAllTasks();
+    }
 }
