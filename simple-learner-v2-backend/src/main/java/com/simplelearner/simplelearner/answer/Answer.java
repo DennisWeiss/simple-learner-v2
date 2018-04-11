@@ -1,7 +1,5 @@
 package com.simplelearner.simplelearner.answer;
 
-import com.simplelearner.simplelearner.task.Task;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,13 +10,13 @@ public class Answer {
     private Long id;
 
     private String text;
-    private Boolean correct;
+    private Boolean isCorrect;
 
     public Answer() {}
 
-    public Answer(String text, Boolean correct) {
+    public Answer(String text, Boolean isCorrect) {
         this.text = text;
-        this.correct = correct;
+        this.isCorrect = isCorrect;
     }
 
     public Long getId() {
@@ -37,11 +35,11 @@ public class Answer {
         this.text = text;
     }
 
-    public Boolean getCorrect() {
-        return correct;
+    public Boolean getIsCorrect() {
+        return isCorrect;
     }
 
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
+    public void setIsCorrect(Boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 }

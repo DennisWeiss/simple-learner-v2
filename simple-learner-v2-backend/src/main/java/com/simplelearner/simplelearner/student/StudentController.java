@@ -6,9 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -40,11 +37,10 @@ public class StudentController {
         return new ResponseEntity<>(student, new HttpHeaders(), student == null ? HttpStatus.NOT_FOUND : HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "{studentName}/addtasks", method = RequestMethod.POST)
-    public ResponseEntity<Student> addTasks(@PathVariable String studentName,
-                                            @RequestParam(name = "taskids") String taskIds) {
-        Student student = studentService.addTasks(studentName,
-                Arrays.stream(taskIds.split("\\s*,\\s*")).map(Long::parseLong).collect(Collectors.toList()));
-        return new ResponseEntity<>(student, new HttpHeaders(), student == null ? HttpStatus.NOT_FOUND : HttpStatus.CREATED);
+    @RequestMapping(value = "{studentName}/{taskId}/answer", method = RequestMethod.GET)
+    public ResponseEntity<StudentSolvedTask> checkAnswer(@PathVariable String studentName, @PathVariable Long taskId,
+                                                         @RequestParam(name = "answerid") Long answerId) {
+        StudentSolvedTask studentSolvedTask = studentService.checkAnswer(studentName, taskId, answerId);
+        return new ResponseEntity<>(studentSolvedTask, new HttpHeaders(), studentSolvedTask == null ? HttpStatus.NOT_FOUND : HttpStatus.CREATED);
     }
 }

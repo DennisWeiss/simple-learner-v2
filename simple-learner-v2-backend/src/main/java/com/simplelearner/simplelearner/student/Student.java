@@ -1,11 +1,13 @@
 package com.simplelearner.simplelearner.student;
 
+import com.simplelearner.simplelearner.answer.Answer;
 import com.simplelearner.simplelearner.section.Section;
 import com.simplelearner.simplelearner.task.Task;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Student {
@@ -22,15 +24,12 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "section"))
     private List<Section> sections;
 
-    @ManyToMany
-    @JoinTable(name = "student_task",
-            joinColumns = @JoinColumn(name = "student"),
-            inverseJoinColumns = @JoinColumn(name = "task"))
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "student")
+    private List<StudentSolvedTask> solvedTasks;
 
     public Student() {
         this.sections = new ArrayList<>();
-        this.tasks = new ArrayList<>();
+        this.solvedTasks = new ArrayList<>();
     }
 
     public Student(String name, String password, String firstName, String lastName) {
@@ -85,15 +84,25 @@ public class Student {
         sections.add(section);
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<StudentSolvedTask> getSolvedTasks() {
+        return solvedTasks;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setSolvedTasks(List<StudentSolvedTask> solvedTasks) {
+        this.solvedTasks = solvedTasks;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
     }
 }
