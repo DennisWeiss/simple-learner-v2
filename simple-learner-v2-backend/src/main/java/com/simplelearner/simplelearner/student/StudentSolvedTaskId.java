@@ -4,7 +4,6 @@ import com.simplelearner.simplelearner.task.Task;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 

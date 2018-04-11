@@ -3,8 +3,7 @@ package com.simplelearner.simplelearner.student;
 import com.simplelearner.simplelearner.task.Task;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -21,7 +20,7 @@ public class StudentSolvedTask {
     @JoinColumn(name = "task_id", insertable = false, updatable = false)
     private Task task;
 
-    private LocalDateTime timestamp;
+    private Instant timestamp;
     private boolean correct;
 
     public StudentSolvedTask() {}
@@ -31,7 +30,7 @@ public class StudentSolvedTask {
         this.student = student;
         this.task = task;
         this.correct = correct;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = Instant.now();
 
         student.getSolvedTasks().add(this);
         task.getSolvedByStudents().add(this);
@@ -53,11 +52,11 @@ public class StudentSolvedTask {
         this.task = task;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 

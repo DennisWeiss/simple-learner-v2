@@ -81,13 +81,4 @@ public class Task {
 
         return Objects.hash(id);
     }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", question='" + question + '\'' +
-                ", answers=" + answers +
-                '}';
-    }
 }
