@@ -7,6 +7,7 @@ import com.simplelearner.simplelearner.section.SectionRepository;
 import com.simplelearner.simplelearner.task.Task;
 import com.simplelearner.simplelearner.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,15 +20,23 @@ public class StudentService {
     private TaskRepository taskRepository;
     private AnswerRepository answerRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     StudentService(StudentRepository studentRepository, SectionRepository sectionRepository,
                    StudentSolvedTaskRepository studentSolvedTaskRepository, TaskRepository taskRepository,
-                   AnswerRepository answerRepository) {
+                   AnswerRepository answerRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
         this.sectionRepository = sectionRepository;
         this.studentSolvedTaskRepository = studentSolvedTaskRepository;
         this.taskRepository = taskRepository;
         this.answerRepository = answerRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    Student register(String name, String password, String firstName, String lastName) {
+        Student student = new Student(name, passwordEncoder.encode(password), firstName, lastName);
+        return studentRepository.save(student);
     }
 
     void save(Student student) {
@@ -49,8 +58,7 @@ public class StudentService {
                     student.addSection(section);
                 }
             }
-            studentRepository.save(student);
-            return student;
+            return studentRepository.save(student);
         }
         return null;
     }
@@ -65,8 +73,7 @@ public class StudentService {
             Task task = taskOptional.get();
             Answer answer = answerOptional.get();
             StudentSolvedTask studentSolvedTask = new StudentSolvedTask(student, task, answer.getIsCorrect());
-            studentSolvedTaskRepository.save(studentSolvedTask);
-            return studentSolvedTask;
+            return studentSolvedTaskRepository.save(studentSolvedTask);
         }
         return null;
     }

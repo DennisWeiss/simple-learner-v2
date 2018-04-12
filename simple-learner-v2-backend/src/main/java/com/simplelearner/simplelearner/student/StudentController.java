@@ -16,13 +16,11 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ResponseEntity<Student> addStudent(@RequestParam String name, @RequestParam String password,
-                                              @RequestParam(name = "firstname") String firstName,
-                                              @RequestParam(name = "lastname") String lastName) {
-        Student student = new Student(name, password, firstName, lastName);
-        studentService.save(student);
-        return new ResponseEntity<>(student, new HttpHeaders(), HttpStatus.CREATED);
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public void register(@RequestParam String name, @RequestParam String password,
+                                            @RequestParam(name = "firstname") String firstName,
+                                            @RequestParam(name = "lastname") String lastName) {
+        Student student = studentService.register(name, password, firstName, lastName);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
