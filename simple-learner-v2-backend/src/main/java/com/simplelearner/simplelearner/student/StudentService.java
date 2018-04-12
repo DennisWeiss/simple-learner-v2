@@ -1,5 +1,6 @@
 package com.simplelearner.simplelearner.student;
 
+import com.simplelearner.simplelearner.RegistrationStatus;
 import com.simplelearner.simplelearner.answer.Answer;
 import com.simplelearner.simplelearner.answer.AnswerRepository;
 import com.simplelearner.simplelearner.section.Section;
@@ -34,13 +35,14 @@ public class StudentService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    Student register(String name, String password, String firstName, String lastName) {
+    RegistrationStatus register(String name, String password, String firstName, String lastName) {
+        Optional<Student> existingStudent = studentRepository.findById(name);
+        if (existingStudent.isPresent()) {
+            return RegistrationStatus.USER_EXISTS_ALREADY;
+        }
         Student student = new Student(name, passwordEncoder.encode(password), firstName, lastName);
-        return studentRepository.save(student);
-    }
-
-    void save(Student student) {
         studentRepository.save(student);
+        return RegistrationStatus.SUCCESS;
     }
 
     Iterable<Student> getAllStudents() {

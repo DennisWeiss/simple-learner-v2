@@ -1,5 +1,6 @@
 package com.simplelearner.simplelearner.student;
 
+import com.simplelearner.simplelearner.RegistrationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,10 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(@RequestParam String name, @RequestParam String password,
-                                            @RequestParam(name = "firstname") String firstName,
-                                            @RequestParam(name = "lastname") String lastName) {
-        Student student = studentService.register(name, password, firstName, lastName);
+    public RegistrationStatus register(@RequestParam String name, @RequestParam String password,
+                                       @RequestParam(name = "firstname") String firstName,
+                                       @RequestParam(name = "lastname") String lastName) {
+        return studentService.register(name, password, firstName, lastName);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
