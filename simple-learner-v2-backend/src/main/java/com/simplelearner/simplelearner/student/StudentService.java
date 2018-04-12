@@ -45,10 +45,6 @@ public class StudentService {
         return RegistrationStatus.SUCCESS;
     }
 
-    Iterable<Student> getAllStudents() {
-        return studentRepository.findAll();
-    }
-
     Student addSections(String studentName, String[] sectionNames) {
         Optional<Student> studentOptional = studentRepository.findById(studentName);
         if (studentOptional.isPresent()) {

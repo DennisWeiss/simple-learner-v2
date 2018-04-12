@@ -24,11 +24,6 @@ public class StudentController {
         return studentService.register(name, password, firstName, lastName);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<Student> getAllStudents() {
-        return studentService.getAllStudents();
-    }
-
     @RequestMapping(value = "{studentName}/addsections", method = RequestMethod.POST)
     public ResponseEntity<Student> addSections(@PathVariable String studentName,
                                                @RequestParam(name = "sectionnames") String sectionNames) {
